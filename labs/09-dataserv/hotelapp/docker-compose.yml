@@ -9,17 +9,11 @@ services:
     restart: always
 
   profile:
-    build:
-      context: .
-      args:
-        - DB=mongodb
-    image: hotel_app_profile_single_node_mongodb
+    image: ${REGISTRY-127.0.0.1:5000}/hotel_app_profile_single_node_memdb
+    entrypoint: search
     container_name: 'hotel_app_profile'
-    entrypoint: profile
     ports:
       - "8081:8081"
-    depends_on:
-      - mongodb-profile
     restart: always
 
   search:
@@ -31,11 +25,17 @@ services:
     restart: always
 
   geo:
-    image: ${REGISTRY-127.0.0.1:5000}/hotel_app_geo_single_node_memdb
-    container_name: 'hotel_app_geo'
-    entrypoint: geo
+    build:
+      context: .
+      args:
+        - DB=mongodb
+    image: hotel_app_profile_single_node_mongodb
+    container_name: 'hotel_app_profile'
+    entrypoint: profile
     ports:
       - "8083:8083"
+    depends_on:
+      - mongodb-geo
     restart: always
 
   rate:
@@ -60,14 +60,14 @@ services:
       - "6832:6832/udp"
     restart: always
 
-  mongodb-profile:
+  mongodb-geo:
     image: mongo:4.4.6
-    container_name: 'hotel_app_profile_mongo'
+    container_name: 'hotel_app_geo_mongo'
     ports:
       - "27018:27017"
     restart: always
     volumes:
-      - profile:/data/db
+      - geo:/data/db
 
 volumes:
-  profile:
+  geo:
