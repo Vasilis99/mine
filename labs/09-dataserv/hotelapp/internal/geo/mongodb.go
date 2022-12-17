@@ -35,9 +35,7 @@ func (db *DatabaseSession) LoadDataFromJsonFile(rateJsonPath string) {
 func (db *DatabaseSession) newGeoIndex() *geoindex.ClusteringIndex {
 	// add points to index
 	index := geoindex.NewClusteringIndex()
-	for _, point := range db.points {
-		index.Add(point)
-	}
+
 
 	return index
 }
