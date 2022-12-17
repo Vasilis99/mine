@@ -1,6 +1,6 @@
 //go:build mongodb
 
-package rate
+package geo
 
 import (
 	log "github.com/sirupsen/logrus"
