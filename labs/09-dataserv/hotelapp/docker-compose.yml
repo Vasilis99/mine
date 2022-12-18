@@ -29,9 +29,9 @@ services:
       context: .
       args:
         - DB=mongodb
-    image: hotel_app_profile_single_node_mongodb
-    container_name: 'hotel_app_profile'
-    entrypoint: profile
+    image: hotel_app_geo_single_node_mongodb
+    container_name: 'hotel_app_geo'
+    entrypoint: geo
     ports:
       - "8083:8083"
     depends_on:
