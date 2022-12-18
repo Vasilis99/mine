@@ -33,9 +33,16 @@ func (db *DatabaseSession) LoadDataFromJsonFile(rateJsonPath string) {
 
 // newGeoIndex returns a geo index with points loaded
 func (db *DatabaseSession) newGeoIndex() *geoindex.ClusteringIndex {
-	// add points to index
+	session := db.MongoSession.Copy()
+	defer session.Close()
+	c := session.DB("geo-db").C("geo")
+	points := make(point, 0)
 	index := geoindex.NewClusteringIndex()
-
+	
+	for cursor.Next(ctx) {
+		
+		err := cursor.Decode(&p);
+	
 
 	return index
 }
